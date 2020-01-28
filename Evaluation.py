@@ -21,13 +21,13 @@ image_input = tf.reshape(x,[-1,28,28,1])
 tf.compat.v1.summary.image("input_data",image_input,10)
 
 
-strides =[[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]]
-conv_dim =[[[5,5,1,32],[3,3,32,64]],[[3,3,64,32],[3,3,32,64]]]
+strides =[[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1],[1,1,1,1]]
+conv_dim =[[[3,3,1,8],[3,3,8,8],[3,3,8,16]],[[3,3,16,16],[3,3,16,16],[3,3,16,16]]]
 Resnet_result = Rs.Resnet_layer(image_input,strides,conv_dim)
 print(Resnet_result.shape)
-Resnet_result_reshape = tf.reshape(Resnet_result,[-1,28*28*64])
+Resnet_result_reshape = tf.reshape(Resnet_result,[-1,28*28*16])
 print(Resnet_result_reshape.shape)
-w = tf.Variable(tf.truncated_normal([28*28*64, 10], stddev=0.1))
+w = tf.Variable(tf.truncated_normal([28*28*16, 10], stddev=0.1))
 b = tf.Variable(tf.constant(0.1, shape=[10]))
 out = tf.nn.softmax(tf.matmul(Resnet_result_reshape,w) + b)
 
