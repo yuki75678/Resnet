@@ -18,9 +18,11 @@ def Resnet_layer(input,strides,conv_dim):
         resnet_input_and_output = input
 
         for i in range(length):
-            strides_1 = strides[i]
-            strides_2 = strides[i+1]
-            strides_3 = strides[i+2]
+            index = i*3
+
+            strides_1 = strides[index]
+            strides_2 = strides[index+1]
+            strides_3 = strides[index+2]
             #return  resnet module output
             output = Rb.Resnet_block(resnet_input_and_output,strides_1,strides_2,strides_3,conv_dim[i])
 
