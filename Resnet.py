@@ -1,21 +1,30 @@
 from tensorflow.examples.tutorials.mnist import input_data
 import tensorflow as tf
 import Resnet_basic_module as Rb
+import sys
 
 #combine all resnet layer
 def Resnet_layer(input,strides,conv_dim):
 
-    strides_1 = strides[0]
-    strides_2 = strides[1]
-    strides_3 = strides[2]
+    length = len(strides)/3
+    if float.is_integer(length):
+        length = int(length)
+
+
+
+        print(length)
+        resnet_input_and_output = input
+
+        for i in range(length):
+            strides_1 = strides[i]
+            strides_2 = strides[i+1]
+            strides_3 = strides[i+2]
     #return first resnet module output
-    output_1 = Rb.Resnet_block(input,strides_1,strides_2,strides_3,conv_dim[0])
+            output = Rb.Resnet_block(resnet_input_and_output,strides_1,strides_2,strides_3,conv_dim[i])
 
-    strides_4 = strides[3]
-    strides_5 = strides[4]
-    strides_6 = strides[5]
+            resnet_input_and_output = output
 
-    #return second resnet module output
-    output_2 = Rb.Resnet_block(output_1,strides_4,strides_5,strides_6,conv_dim[1])
+    else:
+        sys.exit()
 
-    return output_2
+    return resnet_input_and_output
